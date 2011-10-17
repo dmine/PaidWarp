@@ -1,0 +1,46 @@
+name: PaidWarp
+main: com.bl0b.PaidWarp.PaidWarp
+version: 1.0
+description: >
+             Hello World!
+commands:
+   setwarp:
+      description: This is a demo command.
+      permission: paidwarp.setwarp
+      usage: /setwarp <location>
+   delwarp:
+      description: This is a demo command.
+      permission: paidwarp.delwarp
+      usage: /delwarp <location>
+   listwarps:
+      description: This is a demo command.
+      permission: paidwarp.listwarps
+      usage: /listwarps [page]
+   warp:
+      description: This is a demo command.
+      permission: paidwarp.warp
+      usage: /warp <location>
+permissions:
+    paidwarp.*:
+        description: Gives access to all paidwarp commands
+        children:
+            paidwarp.setwarp: true
+            paidwarp.delwarp: true
+            paidwarp.listwarps: true
+            paidwarp.warp: true
+            paidwarp.free: true
+    paidwarp.setwarp:
+        description: Foobar
+        default: op
+    paidwarp.delwarp:
+        description: Foobar
+        default: op
+    paidwarp.listwarps:
+        description: Foobar
+        default: true
+    paidwarp.warp:
+        description: Barfoo
+        default: true
+    paidwarp.free:
+        description: BaaarFooo!!!
+        default: op
