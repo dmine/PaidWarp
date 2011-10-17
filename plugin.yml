@@ -1,23 +1,23 @@
 name: PaidWarp
-main: com.bl0b.PaidWarp.PaidWarp
+main: com.dmine.PaidWarp.PaidWarp
 version: 1.0
 description: >
-             Hello World!
+             Allow users to warp to predefined warp points. Warping costs money.
 commands:
    setwarp:
-      description: This is a demo command.
+      description: Set a new warp point at the location of the player with the given name.
       permission: paidwarp.setwarp
-      usage: /setwarp <location>
+      usage: /setwarp <name>
    delwarp:
-      description: This is a demo command.
+      description: Delete the warp point with the given name.
       permission: paidwarp.delwarp
-      usage: /delwarp <location>
+      usage: /delwarp <name>
    listwarps:
-      description: This is a demo command.
+      description: List all available warp points.
       permission: paidwarp.listwarps
       usage: /listwarps [page]
    warp:
-      description: This is a demo command.
+      description: Warp to the warp point with the given name.
       permission: paidwarp.warp
       usage: /warp <location>
 permissions:
@@ -30,17 +30,17 @@ permissions:
             paidwarp.warp: true
             paidwarp.free: true
     paidwarp.setwarp:
-        description: Foobar
+        description: Set new warp points.
         default: op
     paidwarp.delwarp:
-        description: Foobar
+        description: Delete warp points.
         default: op
     paidwarp.listwarps:
-        description: Foobar
+        description: List warp points.
         default: true
     paidwarp.warp:
-        description: Barfoo
+        description: Warp to a predefined warp point.
         default: true
     paidwarp.free:
-        description: BaaarFooo!!!
+        description: Warping is free.
         default: op
