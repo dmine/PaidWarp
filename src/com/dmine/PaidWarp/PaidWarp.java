@@ -15,7 +15,6 @@ import org.bukkit.util.config.Configuration;
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Methods;
 
-@SuppressWarnings("deprecation")
 public class PaidWarp extends JavaPlugin {
 	
 	public final Logger logger = Logger.getLogger("Minecraft");
@@ -28,7 +27,7 @@ public class PaidWarp extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		this.pdf = this.getDescription();
-		this.logger.info(String.format("[%s] is now enabled.", this.pdf.getName()));
+		this.logger.info(String.format("[%s] Plugin enabled.", this.pdf.getName()));
 		this.executor = new PaidWarpCommandExecutor(this);
 		
 		this.config = new Configuration(new File("bukkit.yml"));
@@ -47,14 +46,14 @@ public class PaidWarp extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		this.logger.info(String.format("[%s] %s", this.pdf.getName() + " is now disabled."));
+		this.logger.info(String.format("[%s] Plugin disabled.", this.pdf.getName()));
 		this.saveWarps();
 	}
 	
 	private void registerCommands() {
 		getCommand("setwarp").setExecutor(executor);
 		getCommand("delwarp").setExecutor(executor);
-		getCommand("listwarps").setExecutor(executor);
+		getCommand("warps").setExecutor(executor);
 		getCommand("warp").setExecutor(executor);
 	}
 	
@@ -81,11 +80,21 @@ public class PaidWarp extends JavaPlugin {
 				}
 			}
 			
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(warpFile));
-			Object result = ois.readObject();
-			ois.close();
-			this.warps = (HashMap<String,SerializableLocation>)result;
-			this.logger.info(String.format("[%s] %d warp points loaded.", this.pdf.getName(), this.warps.size()));
+			try {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(warpFile));
+				Object result = ois.readObject();
+				ois.close();
+				this.warps = (HashMap<String,SerializableLocation>)result;
+				if (this.warps == null) {
+					throw new Exception();
+				}
+				this.logger.info(String.format("[%s] %d warp points loaded.", this.pdf.getName(), this.warps.size()));
+			}
+			catch (Exception e) {
+				//e.printStackTrace();
+				warps = new HashMap<String,SerializableLocation>();
+				this.logger.info(String.format("[%s] Created empty warp list.", this.pdf.getName()));
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

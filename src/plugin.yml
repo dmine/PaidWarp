@@ -12,10 +12,10 @@ commands:
       description: Delete the warp point with the given name.
       permission: paidwarp.delwarp
       usage: /delwarp <name>
-   listwarps:
+   warps:
       description: List all available warp points.
-      permission: paidwarp.listwarps
-      usage: /listwarps [page]
+      permission: paidwarp.warps
+      usage: /warps [page]
    warp:
       description: Warp to the warp point with the given name.
       permission: paidwarp.warp
@@ -26,7 +26,7 @@ permissions:
         children:
             paidwarp.setwarp: true
             paidwarp.delwarp: true
-            paidwarp.listwarps: true
+            paidwarp.warps: true
             paidwarp.warp: true
             paidwarp.free: true
     paidwarp.setwarp:
@@ -35,7 +35,7 @@ permissions:
     paidwarp.delwarp:
         description: Delete warp points.
         default: op
-    paidwarp.listwarps:
+    paidwarp.warps:
         description: List warp points.
         default: true
     paidwarp.warp:

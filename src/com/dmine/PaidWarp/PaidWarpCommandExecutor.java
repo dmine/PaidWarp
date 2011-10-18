@@ -43,7 +43,7 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 		else if (cmdName.equalsIgnoreCase("warp")) {
 			return warp(player, args);
 		}
-		else if(cmd.getName().equalsIgnoreCase("listwarps")) {
+		else if(cmd.getName().equalsIgnoreCase("warps")) {
 			return listWarps(player, args);
 		}
 		
@@ -109,7 +109,7 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 			Location location = player.getLocation();
 			warpLocation.updateLocation(location);
 			
-			if (location.getBlock().getType().equals(Material.AIR)) {
+			if (location.getBlock().getType().equals(Material.AIR) && location.add(0.0d, 1.0d, 0.0d).getBlock().getType().equals(Material.AIR)) {
 				if (location.getWorld().getUID().equals(warpLocation.getUUID())) {
 					if (this.plugin.method.hasAccount(player.getName())) {
 						MethodAccount account = this.plugin.method.getAccount(player.getName());
@@ -157,6 +157,7 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 		
 		if (this.plugin.warps.containsKey(warpName)) {
 			this.plugin.warps.remove(warpName);
+			this.plugin.saveWarps();
 			player.sendMessage("The warp has been removed.");
 			this.plugin.logger.info(String.format("[%s] %s deleted warp %s.", this.plugin.pdf.getName(), player.getName(), warpName));
 		}
@@ -177,7 +178,7 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 		if (!this.plugin.warps.containsKey(warpName)) {
 			SerializableLocation sLocation = new SerializableLocation(player.getLocation());
 			this.plugin.warps.put(warpName, sLocation);
-			//this.plugin.saveWarps();
+			this.plugin.saveWarps();
 			player.sendMessage("The warp has been created.");
 			this.plugin.logger.info(String.format("[%s] %s set new warp point %s", this.plugin.pdf.getName(), player.getName(), warpName));
 		}
