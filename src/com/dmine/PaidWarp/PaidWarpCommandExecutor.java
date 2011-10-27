@@ -112,21 +112,21 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 			if (location.getBlock().getType().equals(Material.AIR) && location.add(0.0d, 1.0d, 0.0d).getBlock().getType().equals(Material.AIR)) {
 				if (location.getWorld().getUID().equals(warpLocation.getUUID())) {
 					if (this.plugin.method.hasAccount(player.getName())) {
-						MethodAccount account = this.plugin.method.getAccount(player.getName());
-						
 						double warpCost = 0;
 						if (!player.hasPermission("paidwarp.free")) {
-							warpCost = this.plugin.config.getDouble("paidwarp.warpcost", 10);
+							warpCost = this.plugin.config.getDouble("paidwarp.cost_base", 10.0);
+							warpCost += this.plugin.config.getDouble("paidwarp.cost_distance", 10.0) * player.getLocation().distance(location) / 1000; 
 						}
 						
+						MethodAccount account = this.plugin.method.getAccount(player.getName());
 						if (account.hasEnough(warpCost)) {
 							account.subtract(warpCost);
 							player.teleport(location);
-							player.sendMessage("Warped you to the destination.");
-							this.plugin.logger.info(String.format("[%s] Warped %s to %s for %.2f.", this.plugin.pdf.getName(), player.getName(), warpName, warpCost));
+							player.sendMessage(String.format("Warped you to the destination. Cost: %s", this.plugin.method.format(warpCost)));
+							this.plugin.logger.info(String.format("[%s] Warped %s to %s for %s.", this.plugin.pdf.getName(), player.getName(), warpName, this.plugin.method.format(warpCost)));
 						}
 						else {
-							player.sendMessage("You dont have enough funds for the warp.");
+							player.sendMessage(String.format("You dont have enough funds for the warp. You need %s.", warpCost));
 						}
 					}
 					else {
@@ -134,7 +134,7 @@ public class PaidWarpCommandExecutor implements CommandExecutor {
 					}
 				}
 				else {
-					player.sendMessage("The warp point is not in your dimension.");
+					player.sendMessage("The warp point is not in your world.");
 				}
 			}
 			else {
