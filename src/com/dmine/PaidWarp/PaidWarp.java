@@ -32,7 +32,8 @@ public class PaidWarp extends JavaPlugin {
 		
 		this.config = new Configuration(new File("bukkit.yml"));
 		this.config.load();
-		this.config.setProperty("paidwarp.warpcost", this.config.getDouble("paidwarp.warpcost", 10));
+		this.config.setProperty("paidwarp.cost_base", this.config.getDouble("paidwarp.cost_base", 10.0));
+		this.config.setProperty("paidwarp.cost_distance", this.config.getDouble("paidwarp.cost_distance", 10.0));
 		this.config.setProperty("paidwarp.warpsperpage", this.config.getInt("paidwarp.warpsperpage", 5));
 		this.config.save();
 		
