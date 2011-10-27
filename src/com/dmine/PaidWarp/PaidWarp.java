@@ -26,6 +26,7 @@ public class PaidWarp extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		//Wo0T is here
 		this.pdf = this.getDescription();
 		this.logger.info(String.format("[%s] Plugin enabled.", this.pdf.getName()));
 		this.executor = new PaidWarpCommandExecutor(this);
